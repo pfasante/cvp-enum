@@ -34,7 +34,7 @@ LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/build/CMakeModules")
 # Look for needed libraries
 find_package(GMP REQUIRED)
 find_package(NTL REQUIRED)
-#find_package(FPLLL REQUIRED)
+find_package(FPLLL REQUIRED)
 
 # Helper Library
 add_library(toolbox STATIC
@@ -50,6 +50,19 @@ add_library(toolbox STATIC
 target_include_directories (toolbox PRIVATE
 	src/libtoolbox
 )
+
+# Test fplll
+add_executable (test_fplll
+	src/test_fplll.cpp
+)
+target_link_libraries (test_fplll
+	${FPLLL_LIBRARIES}
+	${GMP_LIBRARIES}
+)
+target_include_directories (test_fplll PRIVATE
+    ${FPLLL_INCLUDE_DIR}
+)
+
 
 # Executables
 add_executable (decoding
